@@ -2,9 +2,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-# Maintain your gem's version:
-require "mls_ruby_capistrano_slacker/version"
-
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "mls_ruby_capistrano_slacker"
