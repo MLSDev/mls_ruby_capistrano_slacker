@@ -149,3 +149,9 @@ namespace :mls_ruby_capistrano_slacker do
 
   before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
 end
+
+namespace :load do
+  task :defaults do
+    set :mls_ruby_capistrano_slacker_webhook_url, -> { fail ':slack_url is not set' }
+  end
+end
