@@ -36,6 +36,16 @@ namespace :mls_ruby_capistrano_slacker do
             title: 'Title',
             value: 'Value',
             short: true
+          },
+          {
+            title: 'Pipeline',
+            value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
+            short: true
+          },
+          {
+            title: 'Job',
+            value: "<#{ ENV.fetch('CI_JOB_NAME') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
+            short: true
           }
         ]
       }
