@@ -1,6 +1,12 @@
 namespace :mls_ruby_capistrano_slacker do
   desc 'Notify about Capistrano builds via slack'
 
+  username = 'SlackSpeaker'
+
+  notifier = Slack::Notifier.new \
+    (fetch(:mls_ruby_capistrano_slacker_webhook_url) || (raise '`mls_ruby_capistrano_slacker` is not set!')),
+    username: username
+
   task :notify_about_beginning do
     # next unless ENV['CI_PROJECT_ID']
     # next unless ENV['CI_PROJECT_URL']
@@ -11,6 +17,12 @@ namespace :mls_ruby_capistrano_slacker do
     require 'json'
 
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] notify_about_beginning'
+
+    text = '_test_'
+
+    notifier.post icon_emoji: ':scream_cat:', text: """
+      <!channel> #{ text }"""
+
 
     # begin
     #   puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] Getting last tag'
