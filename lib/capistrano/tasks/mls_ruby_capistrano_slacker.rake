@@ -30,14 +30,16 @@ namespace :mls_ruby_capistrano_slacker do
       a_ok_note = {
         fallback: "Everything looks peachy",
         text: "Everything looks peachy",
-        color: "good"
+        color: "good",
+        fields: [
+          {
+            title: 'Title',
+            value: 'Value',
+            short: true
+          }
+        ]
       }
-      a_ok_note2 = {
-        fallback: "Everything looks peachy",
-        text: "Everything looks peachy",
-        color: "good"
-      }
-      notifier.post text: "with an attachment", attachments: [a_ok_note, a_ok_note2, a_ok_note, a_ok_note2]
+      notifier.post text: "with an attachment", attachments: [a_ok_note]
     end
 
     # begin
