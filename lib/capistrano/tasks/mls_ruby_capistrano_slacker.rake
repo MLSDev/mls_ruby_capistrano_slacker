@@ -65,11 +65,6 @@ namespace :mls_ruby_capistrano_slacker do
               short: true
             },
             {
-              title: 'Hosts',
-              value: release_roles(:all).map(&:hostname).join(', '),
-              short: true
-            },
-            {
               title: 'Branch',
               value: "<#{ ENV.fetch('CI_PROJECT_URL') }/tree/#{ ENV.fetch('CI_COMMIT_REF_NAME') }|#{ ENV.fetch('CI_COMMIT_REF_NAME') }>",
               short: true
@@ -78,7 +73,12 @@ namespace :mls_ruby_capistrano_slacker do
               title: 'Commit',
               value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }|#{ ENV.fetch('CI_COMMIT_MESSAGE') }>",
               short: true
-            }
+            },
+            {
+              title: 'Hosts',
+              value: release_roles(:all).map(&:hostname).join(', '),
+              short: true
+            },
           ],
           footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
           footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4',
