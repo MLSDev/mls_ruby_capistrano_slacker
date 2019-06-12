@@ -1,6 +1,8 @@
 namespace :mls_ruby_capistrano_slacker do
   desc 'Notify about Capistrano builds via slack'
 
+  time_now = Time.now.to_i
+
   task :notify_about_beginning do
     # next unless ENV['CI_PROJECT_ID']
     # next unless ENV['CI_PROJECT_URL']
@@ -20,7 +22,8 @@ namespace :mls_ruby_capistrano_slacker do
 
       notifier = Slack::Notifier.new \
         fetch(:mls_ruby_capistrano_slacker_webhook_url),
-        username: '👻'
+        username: 'CapistranoSlacker',
+        icon_emoji: ':ghost:'
 
       #
       # NOTE: getting random lorem picsum image
@@ -71,7 +74,8 @@ namespace :mls_ruby_capistrano_slacker do
             }
           ],
           footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
-          footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
+          footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4',
+          ts: time_now
         }
       ]
     end
