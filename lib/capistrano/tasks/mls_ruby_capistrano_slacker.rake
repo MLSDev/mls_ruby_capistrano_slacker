@@ -48,7 +48,7 @@ namespace :mls_ruby_capistrano_slacker do
         {
           color: 'warning',
           fallback: 'New deploy began',
-          text: "_New deploy began_",
+          text: '_New deploy has began_',
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
