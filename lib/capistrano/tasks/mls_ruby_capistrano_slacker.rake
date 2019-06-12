@@ -41,7 +41,7 @@ namespace :mls_ruby_capistrano_slacker do
         text: "Everything looks peachy",
         author_name: ENV.fetch('GITLAB_USER_NAME'),
         author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
-        author_ico: JSON.parse(gitlab_response.body).first['avatar_url'],
+        author_icon: JSON.parse(gitlab_response.body).first['avatar_url'],
         color: "good",
         footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
         footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4',
