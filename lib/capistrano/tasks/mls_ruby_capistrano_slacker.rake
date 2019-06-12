@@ -156,6 +156,7 @@ namespace :mls_ruby_capistrano_slacker do
         }
       ]
     end
+  end
 
   #
   # FINISHED
@@ -223,6 +224,7 @@ namespace :mls_ruby_capistrano_slacker do
         }
       ]
     end
+  end
 
     # END
   end
