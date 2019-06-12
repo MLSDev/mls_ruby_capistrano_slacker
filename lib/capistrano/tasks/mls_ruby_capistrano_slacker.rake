@@ -42,7 +42,10 @@ namespace :mls_ruby_capistrano_slacker do
 
       hosts = release_roles(:all).map(&:hostname).join(", ")
 
-      notifier.post text: "<https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }|#{ ENV.fetch('GITLAB_USER_NAME') || ENV.fetch('GITLAB_USER_LOGIN') }> started deploy for #{ hosts }", attachments: [a_ok_note]
+      notifier.post \
+        text: "<https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }|#{ ENV.fetch('GITLAB_USER_NAME') || ENV.fetch('GITLAB_USER_LOGIN') }> started deploy for #{ hosts }\n" \
+              "",
+        attachments: [a_ok_note]
     end
 
     # begin
