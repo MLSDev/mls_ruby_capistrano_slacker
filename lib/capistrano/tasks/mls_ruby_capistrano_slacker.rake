@@ -24,8 +24,20 @@ namespace :mls_ruby_capistrano_slacker do
         fetch(:mls_ruby_capistrano_slacker_webhook_url),
         username: username
 
-      notifier.post icon_emoji: ':scream_cat:', text: """
-        <!channel> #{ text }"""
+      # notifier.post icon_emoji: ':scream_cat:', text: """
+      #   <!channel> #{ text }"""
+
+      a_ok_note = {
+        fallback: "Everything looks peachy",
+        text: "Everything looks peachy",
+        color: "good"
+      }
+      a_ok_note2 = {
+        fallback: "Everything looks peachy",
+        text: "Everything looks peachy",
+        color: "good"
+      }
+      notifier.post text: "with an attachment", attachments: [a_ok_note, a_ok_note2, a_ok_note, a_ok_note2]
     end
 
     # begin
