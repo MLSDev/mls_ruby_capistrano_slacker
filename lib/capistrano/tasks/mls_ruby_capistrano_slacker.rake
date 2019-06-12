@@ -89,6 +89,7 @@ namespace :mls_ruby_capistrano_slacker do
         }
       ]
     end
+  end
 
   #
   # FAILED
@@ -224,9 +225,6 @@ namespace :mls_ruby_capistrano_slacker do
         }
       ]
     end
-  end
-
-    # END
   end
 
   before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
