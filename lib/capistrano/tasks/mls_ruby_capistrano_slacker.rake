@@ -71,12 +71,12 @@ namespace :mls_ruby_capistrano_slacker do
             },
             {
               title: 'Branch',
-              value: ENV.fetch('CI_COMMIT_REF_NAME'),
+              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/tree/#{ ENV.fetch('CI_COMMIT_REF_NAME') }|#{ ENV.fetch('CI_COMMIT_REF_NAME') }>",
               short: true
             },
             {
               title: 'Commit',
-              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }|#{ ENV.fetch('CI_COMMIT_MESSAGE') }\n#{ ENV.fetch('CI_COMMIT_DESCRIPTION') }>",
+              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }|#{ ENV.fetch('CI_COMMIT_MESSAGE') }>\n#{ ENV.fetch('CI_COMMIT_DESCRIPTION') }",
               short: true
             }
           ],
