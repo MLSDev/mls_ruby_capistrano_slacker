@@ -129,4 +129,6 @@ namespace :mls_ruby_capistrano_slacker do
     #   puts e.message
     # end
   end
+
+  before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
 end
