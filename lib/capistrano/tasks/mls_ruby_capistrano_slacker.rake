@@ -10,6 +10,8 @@ namespace :mls_ruby_capistrano_slacker do
     require 'uri'
     require 'json'
 
+    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] notify_about_beginning'
+
     # begin
     #   puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] Getting last tag'
 
