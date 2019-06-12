@@ -42,7 +42,7 @@ namespace :mls_ruby_capistrano_slacker do
         color: "good",
         footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
         footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4',
-        image_url: "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
+        image_url: "#{ lorem_picsum_domain }/#{ lorem_picsum_path }",
         fields: [
           {
             title: 'Title',
