@@ -3,6 +3,9 @@ namespace :mls_ruby_capistrano_slacker do
 
   username = 'SlackSpeaker'
 
+  puts "mls_ruby_capistrano_slacker_webhook_url:"
+  puts fetch(:mls_ruby_capistrano_slacker_webhook_url)
+
   notifier = Slack::Notifier.new \
     (fetch(:mls_ruby_capistrano_slacker_webhook_url) || (raise '`mls_ruby_capistrano_slacker` is not set!')),
     username: username
