@@ -30,6 +30,8 @@ namespace :mls_ruby_capistrano_slacker do
       a_ok_note = {
         fallback: "Everything looks peachy",
         text: "Everything looks peachy",
+        author_name: ENV.fetch('GITLAB_USER_NAME'),
+        author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
         color: "good",
         fields: [
           {
