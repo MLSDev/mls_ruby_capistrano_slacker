@@ -7,7 +7,7 @@ namespace :mls_ruby_capistrano_slacker do
   puts fetch(:mls_ruby_capistrano_slacker_webhook_url)
 
   notifier = Slack::Notifier.new \
-    (fetch(:mls_ruby_capistrano_slacker_webhook_url) || (raise '`mls_ruby_capistrano_slacker` is not set!')),
+    fetch(:mls_ruby_capistrano_slacker_webhook_url),
     username: username
 
   task :notify_about_beginning do
