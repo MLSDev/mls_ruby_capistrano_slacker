@@ -34,7 +34,7 @@ namespace :mls_ruby_capistrano_slacker do
       lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
       lorem_picsum_path     = lorem_picsum_response['location']
 
-      gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_NAME') }"))
+      gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
 
       a_ok_note = {
         fallback: "Everything looks peachy",
