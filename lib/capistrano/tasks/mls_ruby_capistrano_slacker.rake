@@ -3,13 +3,6 @@ namespace :mls_ruby_capistrano_slacker do
 
   username = 'SlackSpeaker'
 
-  puts "mls_ruby_capistrano_slacker_webhook_url:"
-  puts fetch(:mls_ruby_capistrano_slacker_webhook_url)
-
-  notifier = Slack::Notifier.new \
-    fetch(:mls_ruby_capistrano_slacker_webhook_url),
-    username: username
-
   task :notify_about_beginning do
     # next unless ENV['CI_PROJECT_ID']
     # next unless ENV['CI_PROJECT_URL']
@@ -21,11 +14,19 @@ namespace :mls_ruby_capistrano_slacker do
 
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] notify_about_beginning'
 
-    text = '_test_'
+    on roles(:all) do |host|
+      text = '_test_'
 
-    notifier.post icon_emoji: ':scream_cat:', text: """
-      <!channel> #{ text }"""
+      puts "mls_ruby_capistrano_slacker_webhook_url:"
+      puts fetch(:mls_ruby_capistrano_slacker_webhook_url)
 
+      notifier = Slack::Notifier.new \
+        fetch(:mls_ruby_capistrano_slacker_webhook_url),
+        username: username
+
+      notifier.post icon_emoji: ':scream_cat:', text: """
+        <!channel> #{ text }"""
+    end
 
     # begin
     #   puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] Getting last tag'
