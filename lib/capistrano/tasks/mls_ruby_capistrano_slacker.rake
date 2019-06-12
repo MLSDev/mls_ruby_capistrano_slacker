@@ -44,7 +44,7 @@ namespace :mls_ruby_capistrano_slacker do
           },
           {
             title: 'Job',
-            value: "<#{ ENV.fetch('CI_JOB_NAME') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
+            value: "<#{ ENV.fetch('CI_JOB_URL') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
             short: true
           }
         ]
