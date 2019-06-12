@@ -76,7 +76,7 @@ namespace :mls_ruby_capistrano_slacker do
             },
             {
               title: 'Commit',
-              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }|#{ ENV.fetch('CI_COMMIT_MESSAGE') }>\n#{ ENV.fetch('CI_COMMIT_DESCRIPTION') }",
+              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }| #{ ENV.fetch('CI_COMMIT_MESSAGE') } _#{ ENV.fetch('CI_COMMIT_DESCRIPTION') }_>",
               short: true
             }
           ],
