@@ -66,7 +66,7 @@ namespace :mls_ruby_capistrano_slacker do
             },
             {
               title: 'Hosts',
-              value: release_roles(:all).map(&:hostname).join(", "),
+              value: release_roles(:all).map(&:hostname).join(', '),
               short: true
             },
             {
@@ -76,7 +76,7 @@ namespace :mls_ruby_capistrano_slacker do
             },
             {
               title: 'Commit',
-              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }| #{ ENV.fetch('CI_COMMIT_MESSAGE') } _#{ ENV.fetch('CI_COMMIT_DESCRIPTION') }_>",
+              value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }|#{ ENV.fetch('CI_COMMIT_MESSAGE') }>",
               short: true
             }
           ],
