@@ -27,12 +27,22 @@ namespace :mls_ruby_capistrano_slacker do
       # notifier.post icon_emoji: ':scream_cat:', text: """
       #   <!channel> #{ text }"""
 
+      #
+      # NOTE: getting random lorem picsum image
+      #
+      lorem_picsum_domain   = "https://picsum.photos"
+      lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
+      lorem_picsum_path     = lorem_picsum_response['location']
+
       a_ok_note = {
         fallback: "Everything looks peachy",
         text: "Everything looks peachy",
         author_name: ENV.fetch('GITLAB_USER_NAME'),
         author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
         color: "good",
+        footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
+        footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4',
+        image_url: "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
         fields: [
           {
             title: 'Title',
@@ -41,23 +51,23 @@ namespace :mls_ruby_capistrano_slacker do
           },
           {
             title: 'Pipeline',
-            value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
+            value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| #{ ENV.fetch('CI_PIPELINE_ID') } via #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
             short: true
           },
           {
             title: 'Job',
             value: "<#{ ENV.fetch('CI_JOB_URL') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
             short: true
+          },
+          {
+            title: 'Hosts',
+            value: release_roles(:all).map(&:hostname).join(", "),
+            short: true
           }
         ]
       }
 
-      hosts = release_roles(:all).map(&:hostname).join(", ")
-
-      notifier.post \
-        text: "<https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }|#{ ENV.fetch('GITLAB_USER_NAME') || ENV.fetch('GITLAB_USER_LOGIN') }> started deploy for #{ hosts }\n" \
-              "",
-        attachments: [a_ok_note]
+      notifier.post text: '', attachments: [a_ok_note]
     end
 
     # begin
