@@ -11,7 +11,7 @@ namespace :mls_ruby_capistrano_slacker do
   # BEGINNING
   #
   task :notify_about_beginning do
-    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] notify_about_beginning'
+    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
     on roles(:all) do |host|
       notifier = Slack::Notifier.new \
@@ -22,29 +22,29 @@ namespace :mls_ruby_capistrano_slacker do
       #
       # NOTE: getting random lorem picsum image
       #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] get https://picsum.photos random url'
+      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get https://picsum.photos random url'
       begin
         lorem_picsum_domain   = "https://picsum.photos"
         lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
         lorem_picsum_path     = lorem_picsum_response['location']
         image_url             = "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [✅️] lorem pixum random url'
+        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] lorem pixum random url'
       rescue => e
         image_url             = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [🚨] #{ e.message }"
+        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
       end
 
       #
       # NOTE: response from GitLab
       #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] get GitLab user avatar'
+      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
       begin
         gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
         author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [✅️] got link'
+        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
       rescue => e
         author_icon = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [🚨] #{ e.message }"
+        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
       end
 
       notifier.post text: '', attachments: [
@@ -95,7 +95,7 @@ namespace :mls_ruby_capistrano_slacker do
   # FAILED
   #
   task :notify_failed do
-    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] notify_failed'
+    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
     on roles(:all) do |host|
       notifier = Slack::Notifier.new \
@@ -106,14 +106,14 @@ namespace :mls_ruby_capistrano_slacker do
       #
       # NOTE: response from GitLab
       #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] get GitLab user avatar'
+      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
       begin
         gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
         author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [✅️] got link'
+        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
       rescue => e
         author_icon = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [🚨] #{ e.message }"
+        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
       end
 
       notifier.post text: '', attachments: [
@@ -163,7 +163,7 @@ namespace :mls_ruby_capistrano_slacker do
   # FINISHED
   #
   task :notify_finished do
-    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] notify_finished'
+    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
     on roles(:all) do |host|
       notifier = Slack::Notifier.new \
@@ -174,14 +174,14 @@ namespace :mls_ruby_capistrano_slacker do
       #
       # NOTE: response from GitLab
       #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] get GitLab user avatar'
+      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
       begin
         gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
         author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [✅️] got link'
+        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
       rescue => e
         author_icon = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [🚨] #{ e.message }"
+        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
       end
 
       notifier.post text: '', attachments: [
