@@ -18,6 +18,18 @@ Or install it yourself as:
 $ gem install mls_ruby_capistrano_slacker
 ```
 
+Update `Capistrano`
+
+```ruby
+require 'capistrano/mls_ruby_capistrano_slacker'
+```
+
+Add variable to your stage
+
+```ruby
+set :mls_ruby_capistrano_slacker_webhook_url, ENV.fetch('CAPISTANO_SLACKER_WEBHOOK_URL')
+```
+
 ## Contributing
 
 1. Fork it
