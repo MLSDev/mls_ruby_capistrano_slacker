@@ -8,7 +8,7 @@ require "mls_ruby_capistrano_slacker/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "mls_ruby_capistrano_slacker"
-  spec.version     = MlsRubyCapistranoSlacker::VERSION
+  spec.version     = '0.0.1'
   spec.authors     = ["Dmytro Stepaniuk"]
   spec.email       = ["stepaniuk@mlsdev.com"]
   spec.homepage    = "https://mlsdev.com"
