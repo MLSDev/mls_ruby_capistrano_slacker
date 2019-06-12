@@ -1,8 +1,6 @@
 namespace :mls_ruby_capistrano_slacker do
   desc 'Notify about Capistrano builds via slack'
 
-  username = 'SlackSpeaker'
-
   task :notify_about_beginning do
     # next unless ENV['CI_PROJECT_ID']
     # next unless ENV['CI_PROJECT_URL']
@@ -22,50 +20,60 @@ namespace :mls_ruby_capistrano_slacker do
 
       notifier = Slack::Notifier.new \
         fetch(:mls_ruby_capistrano_slacker_webhook_url),
-        username: username
-
-      # notifier.post icon_emoji: ':scream_cat:', text: """
-      #   <!channel> #{ text }"""
+        username: '👻'
 
       #
       # NOTE: getting random lorem picsum image
       #
-      lorem_picsum_domain   = "https://picsum.photos"
-      lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
-      lorem_picsum_path     = lorem_picsum_response['location']
+      begin
+        lorem_picsum_domain   = "https://picsum.photos"
+        lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
+        lorem_picsum_path     = lorem_picsum_response['location']
+        image_url             = "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
+      rescue
+        image_url             = nil
+      end
 
-      gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
+      #
+      # NOTE: response from GitLab
+      #
+      begin
+        gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
+        author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
+      rescue
+        author_icon = nil
+      end
 
-      a_ok_note = {
-        fallback: "Everything looks peachy",
-        text: "Everything looks peachy",
-        author_name: ENV.fetch('GITLAB_USER_NAME'),
-        author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
-        author_icon: JSON.parse(gitlab_response.body).first['avatar_url'],
-        color: "good",
-        footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
-        footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4',
-        image_url: "#{ lorem_picsum_domain }/#{ lorem_picsum_path }",
-        fields: [
-          {
-            title: 'Job',
-            value: "<#{ ENV.fetch('CI_JOB_URL') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
-            short: true
-          },
-          {
-            title: 'Pipeline',
-            value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| #{ ENV.fetch('CI_PIPELINE_ID') } via #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
-            short: true
-          },
-          {
-            title: 'Hosts',
-            value: release_roles(:all).map(&:hostname).join(", "),
-            short: true
-          }
-        ]
-      }
-
-      notifier.post text: '', attachments: [a_ok_note]
+      notifier.post text: '', attachments: [
+        {
+          color: 'warning',
+          fallback: 'New deploy began',
+          text: "_New deploy began_",
+          author_name: ENV.fetch('GITLAB_USER_NAME'),
+          author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
+          author_icon: author_icon,
+          image_url: image_url,
+          fields: [
+            {
+              title: 'Job',
+              value: "<#{ ENV.fetch('CI_JOB_URL') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
+              short: true
+            },
+            {
+              title: 'Pipeline',
+              value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| #{ ENV.fetch('CI_PIPELINE_ID') } via #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
+              short: true
+            },
+            {
+              title: 'Hosts',
+              value: release_roles(:all).map(&:hostname).join(", "),
+              short: true
+            }
+          ],
+          footer: '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>',
+          footer_ico: 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
+        }
+      ]
     end
 
     # begin
