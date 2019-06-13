@@ -25,7 +25,7 @@ namespace :mls_ruby_capistrano_slacker do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get https://picsum.photos random url'
     begin
       lorem_picsum_domain   = "https://picsum.photos"
-      lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
+      lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/600" ))
       lorem_picsum_path     = lorem_picsum_response['location']
       url                   = "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
       puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] lorem pixum random url'
