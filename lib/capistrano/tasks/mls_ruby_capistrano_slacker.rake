@@ -72,7 +72,7 @@ namespace :mls_ruby_capistrano_slacker do
 
     parsed_response = JSON.parse(response.body)
 
-    puts parsed_response.first
+    puts parsed_response
 
     last_sha = parsed_response.first.fetch('sha', nil) rescue nil
     if last_sha
