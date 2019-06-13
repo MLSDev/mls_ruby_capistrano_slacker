@@ -38,7 +38,7 @@ namespace :mls_ruby_capistrano_slacker do
   end
 
   def get_release_description
-    return if fetch(:skip_get_release_description)
+    return unless fetch(:mls_ruby_capistrano_slacker_post_release_description)
 
     pipelines_url = URI.parse(
       "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/pipelines?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }&status=success&ref=#{ ENV.fetch('CI_COMMIT_REF_NAME') }"
@@ -210,7 +210,7 @@ namespace :load do
     set :mls_ruby_capistrano_slacker_webhook_url, -> { fail ':mls_ruby_capistrano_slacker_webhook_url is not set' }
     set :github_url_to_the_project,               '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>'
     set :github_mls_logo,                         'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
-    set :skip_get_release_description,            false
+    set :mls_ruby_capistrano_slacker_post_release_description, false
     set :mls_ruby_gitlab_private_token,           ENV['GITLAB__PRIVATE_TOKEN']
     set :slack_attachment_fields, -> {
       slack_attachment_fields__job = {
