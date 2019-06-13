@@ -47,7 +47,7 @@ namespace :mls_ruby_capistrano_slacker do
     headers = {
       'Accept':        'application/json',
       'Content-Type':  'application/json',
-      'PRIVATE-TOKEN': ENV['PRIVATE_TOKEN']
+      'PRIVATE-TOKEN': ENV['CI_JOB_TOKEN']
     }
 
     http = Net::HTTP.new(tags_uri.host, tags_uri.port)
