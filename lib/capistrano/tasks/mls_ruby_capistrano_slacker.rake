@@ -112,7 +112,8 @@ namespace :mls_ruby_capistrano_slacker do
     end
 
     messages.join
-  rescue
+  rescue => e
+    puts e.message
     nil
   end
 
