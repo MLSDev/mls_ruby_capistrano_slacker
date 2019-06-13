@@ -56,7 +56,7 @@ namespace :mls_ruby_capistrano_slacker do
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
           image_url:   image_url,
-          fields:      slack_attachment_fields,
+          fields:      fetch(:slack_attachment_fields),
           footer:      fetch(:github_url_to_the_project),
           footer_ico:  fetch(:github_mls_logo),
           ts:          Time.now.to_i
@@ -83,7 +83,7 @@ namespace :mls_ruby_capistrano_slacker do
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
-          fields:      slack_attachment_fields,
+          fields:      fetch(:slack_attachment_fields),
           footer:      fetch(:github_url_to_the_project),
           footer_ico:  fetch(:github_mls_logo),
           ts:          Time.now.to_i
@@ -110,7 +110,7 @@ namespace :mls_ruby_capistrano_slacker do
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
-          fields:      slack_attachment_fields,
+          fields:      fetch(:slack_attachment_fields),
           footer:      fetch(:github_url_to_the_project),
           footer_ico:  fetch(:github_mls_logo),
           ts:          Time.now.to_i
