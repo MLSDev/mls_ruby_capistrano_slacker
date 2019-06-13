@@ -105,8 +105,8 @@ namespace :mls_ruby_capistrano_slacker do
         icon_emoji: ':ghost:').post text: '', attachments: [
         {
           color:       'good',
-          fallback:    'Deploy has finished',
-          text:        '_Deploy has finished_',
+          fallback:    'Deploy has been finished',
+          text:        '_Deploy has been finished_',
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
