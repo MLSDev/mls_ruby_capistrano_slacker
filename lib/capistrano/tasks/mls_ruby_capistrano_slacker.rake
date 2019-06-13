@@ -40,8 +40,8 @@ namespace :mls_ruby_capistrano_slacker do
   def get_release_description
     return if fetch(:skip_get_release_description)
 
-    tags_uri = URI.parse(
-      "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/repository/tags"
+    pipelines_url = URI.parse(
+      "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/pipelines?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }&status=success&ref=#{ ENV.fetch('CI_COMMIT_SHA') }"
     )
 
     headers = {
@@ -50,15 +50,15 @@ namespace :mls_ruby_capistrano_slacker do
       'PRIVATE-TOKEN': fetch(:mls_ruby_gitlab_private_token)
     }
 
-    http = Net::HTTP.new(tags_uri.host, tags_uri.port)
+    http = Net::HTTP.new(pipelines_url.host, pipelines_url.port)
     http.use_ssl = true
 
-    request = Net::HTTP::Get.new(tags_uri.request_uri, headers)
+    request = Net::HTTP::Get.new(pipelines_url.request_uri, headers)
     response = http.request(request)
 
     case response
     when Net::HTTPSuccess
-      puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [✅] Tags'
+      puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [✅] Last successful pipeline sha'
     when Net::HTTPUnauthorized
       puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [🚨] Net::HTTPUnauthorized - have You missed PRIVATE_TOKEN configuration?'
       exit 1
@@ -72,19 +72,17 @@ namespace :mls_ruby_capistrano_slacker do
 
     parsed_response = JSON.parse(response.body)
 
-    puts parsed_response.first
-
-    last_tag = parsed_response.first.fetch('name', nil) rescue nil
-    if last_tag
-      puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] We found that last tag is #{ last_tag }"
+    last_sha = parsed_response.first.fetch('name', nil) rescue nil
+    if last_sha
+      puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] We found that last tag is #{ last_sha }"
     else
-      last_tag ||= 'production' # in case if there was no tags created yet
-      puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] We didnt found last tag in your git repository. So, its supposed that You have #{ last_tag } branch that will be used as last save point."
+      last_sha ||= 'production' # in case if there was no tags created yet
+      puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] We didnt found last tag in your git repository. So, its supposed that You have #{ last_sha } branch that will be used as last save point."
       puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] Also, we will use #{ ENV['CI_COMMIT_REF_NAME'] } branch that supposed to be latest branch that is gonna be deployed"
     end
 
     compare_uri = URI.parse(
-      "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/repository/compare?from=#{ last_tag }&to=#{ ENV['CI_COMMIT_REF_NAME'] }"
+      "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/repository/compare?from=#{ last_sha }&to=#{ ENV['CI_COMMIT_REF_NAME'] }"
     )
 
     http = Net::HTTP.new(compare_uri.host, compare_uri.port).tap { |http| http.use_ssl = true }
