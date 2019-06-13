@@ -8,11 +8,6 @@ namespace :mls_ruby_capistrano_slacker do
   time_now = Time.now.to_i
 
   on roles(:all) do |host|
-    @notifier = Slack::Notifier.new \
-      fetch(:mls_ruby_capistrano_slacker_webhook_url),
-      username: 'CapistranoSlacker',
-      icon_emoji: ':ghost:'
-
     @slack_attachment_fields__job = {
       title: 'Job',
       value: "<#{ ENV.fetch('CI_JOB_URL') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
@@ -94,7 +89,10 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_about_beginning do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
-    @notifier.post text: '', attachments: [
+    Slack::Notifier.new(
+      fetch(:mls_ruby_capistrano_slacker_webhook_url),
+      username: 'CapistranoSlacker',
+      icon_emoji: ':ghost:').post text: '', attachments: [
       {
         color:       'warning',
         fallback:    'New deploy has began',
@@ -117,7 +115,10 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_failed do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
-    @notifier.post text: '', attachments: [
+    Slack::Notifier.new(
+      fetch(:mls_ruby_capistrano_slacker_webhook_url),
+      username: 'CapistranoSlacker',
+      icon_emoji: ':ghost:').post text: '', attachments: [
       {
         color:       'danger',
         fallback:    'Deploy has failed',
@@ -139,7 +140,10 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_finished do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
-    @notifier.post text: '', attachments: [
+    Slack::Notifier.new(
+      fetch(:mls_ruby_capistrano_slacker_webhook_url),
+      username: 'CapistranoSlacker',
+      icon_emoji: ':ghost:').post text: '', attachments: [
       {
         color:       'good',
         fallback:    'Deploy has finished',
