@@ -44,7 +44,7 @@ namespace :mls_ruby_capistrano_slacker do
     }
   end
 
-  slack_attachment_fields = [].push(
+  @slack_attachment_fields = [].push(
     @slack_attachment_fields__job,
     @slack_attachment_fields__pipeline,
     @slack_attachment_fields__branch,
@@ -56,6 +56,38 @@ namespace :mls_ruby_capistrano_slacker do
 
   @github_mls_logo           = 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
 
+  def author_icon
+    info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
+    begin
+      gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
+      icon = JSON.parse(gitlab_response.body).first['avatar_url']
+      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
+      icon
+    rescue => e
+      info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
+      nil
+    end
+  end
+
+  def image_url
+    #
+    # NOTE: getting random lorem picsum image
+    #
+    info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get https://picsum.photos random url'
+    begin
+      lorem_picsum_domain   = "https://picsum.photos"
+      lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
+      lorem_picsum_path     = lorem_picsum_response['location']
+      url                   = "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
+      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] lorem pixum random url'
+      url
+    rescue => e
+      info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
+      nil
+    end
+
+  end
+
   #
   # BEGINNING
   #
@@ -63,34 +95,6 @@ namespace :mls_ruby_capistrano_slacker do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
     on roles(:all) do |host|
-      #
-      # NOTE: getting random lorem picsum image
-      #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get https://picsum.photos random url'
-      begin
-        lorem_picsum_domain   = "https://picsum.photos"
-        lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
-        lorem_picsum_path     = lorem_picsum_response['location']
-        image_url             = "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] lorem pixum random url'
-      rescue => e
-        image_url             = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
-      end
-
-      #
-      # NOTE: response from GitLab
-      #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
-      begin
-        gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
-        author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
-      rescue => e
-        author_icon = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
-      end
-
       @notifier.post text: '', attachments: [
         {
           color:       'warning',
@@ -100,9 +104,9 @@ namespace :mls_ruby_capistrano_slacker do
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
           image_url:   image_url,
-          fields:      slack_attachment_fields,
+          fields:      @slack_attachment_fields,
           footer:      @github_url_to_the_project,
-          footer_ico:  github_mls_logo,
+          footer_ico:  @github_mls_logo,
           ts:          @time_now
         }
       ]
@@ -116,19 +120,6 @@ namespace :mls_ruby_capistrano_slacker do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
     on roles(:all) do |host|
-      #
-      # NOTE: response from GitLab
-      #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
-      begin
-        gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
-        author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
-      rescue => e
-        author_icon = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
-      end
-
       @notifier.post text: '', attachments: [
         {
           color:       'danger',
@@ -137,9 +128,9 @@ namespace :mls_ruby_capistrano_slacker do
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
-          fields:      slack_attachment_fields,
+          fields:      @slack_attachment_fields,
           footer:      @github_url_to_the_project,
-          footer_ico:  github_mls_logo,
+          footer_ico:  @github_mls_logo,
           ts:          @time_now
         }
       ]
@@ -153,19 +144,6 @@ namespace :mls_ruby_capistrano_slacker do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
     on roles(:all) do |host|
-      #
-      # NOTE: response from GitLab
-      #
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
-      begin
-        gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
-        author_icon = JSON.parse(gitlab_response.body).first['avatar_url']
-        info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
-      rescue => e
-        author_icon = nil
-        info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
-      end
-
       @notifier.post text: '', attachments: [
         {
           color:       'good',
@@ -174,9 +152,9 @@ namespace :mls_ruby_capistrano_slacker do
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
-          fields:      slack_attachment_fields,
+          fields:      @slack_attachment_fields,
           footer:      @github_url_to_the_project,
-          footer_ico:  github_mls_logo,
+          footer_ico:  @github_mls_logo,
           ts:          @time_now
         }
       ]
