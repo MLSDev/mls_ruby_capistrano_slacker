@@ -89,24 +89,26 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_about_beginning do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
-    Slack::Notifier.new(
-      fetch(:mls_ruby_capistrano_slacker_webhook_url),
-      username: 'CapistranoSlacker',
-      icon_emoji: ':ghost:').post text: '', attachments: [
-      {
-        color:       'warning',
-        fallback:    'New deploy has began',
-        text:        '_New deploy has began_',
-        author_name: ENV.fetch('GITLAB_USER_NAME'),
-        author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
-        author_icon: author_icon,
-        image_url:   image_url,
-        fields:      @slack_attachment_fields,
-        footer:      @github_url_to_the_project,
-        footer_ico:  @github_mls_logo,
-        ts:          @time_now
-      }
-    ]
+    on roles(:all) do |host|
+      Slack::Notifier.new(
+        fetch(:mls_ruby_capistrano_slacker_webhook_url),
+        username: 'CapistranoSlacker',
+        icon_emoji: ':ghost:').post text: '', attachments: [
+        {
+          color:       'warning',
+          fallback:    'New deploy has began',
+          text:        '_New deploy has began_',
+          author_name: ENV.fetch('GITLAB_USER_NAME'),
+          author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
+          author_icon: author_icon,
+          image_url:   image_url,
+          fields:      @slack_attachment_fields,
+          footer:      @github_url_to_the_project,
+          footer_ico:  @github_mls_logo,
+          ts:          @time_now
+        }
+      ]
+    end
   end
 
   #
@@ -115,23 +117,25 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_failed do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
-    Slack::Notifier.new(
-      fetch(:mls_ruby_capistrano_slacker_webhook_url),
-      username: 'CapistranoSlacker',
-      icon_emoji: ':ghost:').post text: '', attachments: [
-      {
-        color:       'danger',
-        fallback:    'Deploy has failed',
-        text:        '_Deploy has failed_',
-        author_name: ENV.fetch('GITLAB_USER_NAME'),
-        author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
-        author_icon: author_icon,
-        fields:      @slack_attachment_fields,
-        footer:      @github_url_to_the_project,
-        footer_ico:  @github_mls_logo,
-        ts:          @time_now
-      }
-    ]
+    on roles(:all) do |host|
+      Slack::Notifier.new(
+        fetch(:mls_ruby_capistrano_slacker_webhook_url),
+        username: 'CapistranoSlacker',
+        icon_emoji: ':ghost:').post text: '', attachments: [
+        {
+          color:       'danger',
+          fallback:    'Deploy has failed',
+          text:        '_Deploy has failed_',
+          author_name: ENV.fetch('GITLAB_USER_NAME'),
+          author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
+          author_icon: author_icon,
+          fields:      @slack_attachment_fields,
+          footer:      @github_url_to_the_project,
+          footer_ico:  @github_mls_logo,
+          ts:          @time_now
+        }
+      ]
+    end
   end
 
   #
@@ -140,23 +144,25 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_finished do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
-    Slack::Notifier.new(
-      fetch(:mls_ruby_capistrano_slacker_webhook_url),
-      username: 'CapistranoSlacker',
-      icon_emoji: ':ghost:').post text: '', attachments: [
-      {
-        color:       'good',
-        fallback:    'Deploy has finished',
-        text:        '_Deploy has finished_',
-        author_name: ENV.fetch('GITLAB_USER_NAME'),
-        author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
-        author_icon: author_icon,
-        fields:      @slack_attachment_fields,
-        footer:      @github_url_to_the_project,
-        footer_ico:  @github_mls_logo,
-        ts:          @time_now
-      }
-    ]
+    on roles(:all) do |host|
+      Slack::Notifier.new(
+        fetch(:mls_ruby_capistrano_slacker_webhook_url),
+        username: 'CapistranoSlacker',
+        icon_emoji: ':ghost:').post text: '', attachments: [
+        {
+          color:       'good',
+          fallback:    'Deploy has finished',
+          text:        '_Deploy has finished_',
+          author_name: ENV.fetch('GITLAB_USER_NAME'),
+          author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
+          author_icon: author_icon,
+          fields:      @slack_attachment_fields,
+          footer:      @github_url_to_the_project,
+          footer_ico:  @github_mls_logo,
+          ts:          @time_now
+        }
+      ]
+    end
   end
 
   before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
