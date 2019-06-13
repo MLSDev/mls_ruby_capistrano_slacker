@@ -72,6 +72,8 @@ namespace :mls_ruby_capistrano_slacker do
 
     parsed_response = JSON.parse(response.body)
 
+    puts parsed_response.first
+
     last_tag = parsed_response.first.try(:[], 'name')
     if last_tag
       puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] We found that last tag is #{ last_tag }"
