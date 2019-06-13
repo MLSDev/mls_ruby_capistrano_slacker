@@ -186,7 +186,7 @@ namespace :mls_ruby_capistrano_slacker do
           color:       'good',
           fallback:    'Deploy has been finished',
           pretext:      get_release_description,
-          text:        '_Deploy has been finished_',
+          text:        "_Deploy has been finished_\n#{ get_release_description }",
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
