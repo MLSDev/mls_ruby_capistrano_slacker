@@ -8,7 +8,7 @@ namespace :mls_ruby_capistrano_slacker do
   time_now = Time.now.to_i
 
   on roles(:all) do |host|
-    @notifier = Slack::Notifier.new \
+    @@notifier = Slack::Notifier.new \
       fetch(:mls_ruby_capistrano_slacker_webhook_url),
       username: 'CapistranoSlacker',
       icon_emoji: ':ghost:'
@@ -98,7 +98,7 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_about_beginning do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
-    @notifier.post text: '', attachments: [
+    @@notifier.post text: '', attachments: [
       {
         color:       'warning',
         fallback:    'New deploy has began',
@@ -121,7 +121,7 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_failed do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
-    @notifier.post text: '', attachments: [
+    @@notifier.post text: '', attachments: [
       {
         color:       'danger',
         fallback:    'Deploy has failed',
@@ -143,7 +143,7 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_finished do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
-    @notifier.post text: '', attachments: [
+    @@notifier.post text: '', attachments: [
       {
         color:       'good',
         fallback:    'Deploy has finished',
