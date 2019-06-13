@@ -110,7 +110,7 @@ namespace :mls_ruby_capistrano_slacker do
 
     # commits key - should be array of hashes
     messages =  parsed_response.fetch('commits', []).map do |commit|
-      "- [#{ commit['id'] }](#{ ENV['CI_PROJECT_URL'] }/commit/#{ commit['id'] }) #{ commit['title'] } by #{ commit['author_name'] }"
+      "- [#{ commit['short_id'] }](#{ ENV['CI_PROJECT_URL'] }/commit/#{ commit['id'] }) #{ commit['title'] } by #{ commit['author_name'] }\n"
     end
 
     messages.join
