@@ -1,5 +1,5 @@
 # mls_ruby_capistrano_slacker
-Tool that allows quickly prepare tag message that is based on commit messages.
+Capistrano and GitLab to Slack integration.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -28,6 +28,12 @@ Add variable to your stage
 
 ```ruby
 set :mls_ruby_capistrano_slacker_webhook_url, ENV.fetch('CAPISTANO_SLACKER_WEBHOOK_URL')
+```
+
+Also, if you want to publish release description to your Slack - just set following variable in your deploy configs
+
+```ruby
+set :mls_ruby_capistrano_slacker_post_release_description, true
 ```
 
 ## Contributing
