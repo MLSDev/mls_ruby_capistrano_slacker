@@ -136,9 +136,9 @@ namespace :mls_ruby_capistrano_slacker do
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
           image_url:   image_url,
-          fields:      fetch(:slack_attachment_fields),
-          footer:      fetch(:github_url_to_the_project),
-          footer_ico:  fetch(:github_mls_logo),
+          fields:      fetch(:mls_ruby_slack_attachment_fields),
+          footer:      fetch(:mls_ruby_github_url_to_the_project),
+          footer_ico:  fetch(:mls_ruby_github_mls_logo),
           ts:          Time.now.to_i
         }
       ]
@@ -163,9 +163,9 @@ namespace :mls_ruby_capistrano_slacker do
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
-          fields:      fetch(:slack_attachment_fields),
-          footer:      fetch(:github_url_to_the_project),
-          footer_ico:  fetch(:github_mls_logo),
+          fields:      fetch(:mls_ruby_slack_attachment_fields),
+          footer:      fetch(:mls_ruby_github_url_to_the_project),
+          footer_ico:  fetch(:mls_ruby_github_mls_logo),
           ts:          Time.now.to_i
         }
       ]
@@ -190,9 +190,9 @@ namespace :mls_ruby_capistrano_slacker do
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
-          fields:      fetch(:slack_attachment_fields),
-          footer:      fetch(:github_url_to_the_project),
-          footer_ico:  fetch(:github_mls_logo),
+          fields:      fetch(:mls_ruby_slack_attachment_fields),
+          footer:      fetch(:mls_ruby_github_url_to_the_project),
+          footer_ico:  fetch(:mls_ruby_github_mls_logo),
           ts:          Time.now.to_i,
           mrkdwn_in:   ['text', 'pretext']
         }
@@ -207,12 +207,12 @@ end
 
 namespace :load do
   task :defaults do
-    set :mls_ruby_capistrano_slacker_webhook_url, -> { fail ':mls_ruby_capistrano_slacker_webhook_url is not set' }
-    set :github_url_to_the_project,               '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>'
-    set :github_mls_logo,                         'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
+    set :mls_ruby_capistrano_slacker_webhook_url,              -> { fail ':mls_ruby_capistrano_slacker_webhook_url is not set' }
+    set :mls_ruby_github_url_to_the_project,                   '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>'
+    set :mls_ruby_github_mls_logo,                             'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
     set :mls_ruby_capistrano_slacker_post_release_description, false
-    set :mls_ruby_gitlab_private_token,           ENV['GITLAB__PRIVATE_TOKEN']
-    set :slack_attachment_fields, -> {
+    set :mls_ruby_gitlab_private_token,                        ENV['GITLAB__PRIVATE_TOKEN']
+    set :mls_ruby_slack_attachment_fields, -> {
       slack_attachment_fields__job = {
         title: 'Job',
         value: "<#{ ENV.fetch('CI_JOB_URL') }| #{ ENV.fetch('CI_JOB_STAGE') } >",
