@@ -41,7 +41,7 @@ namespace :mls_ruby_capistrano_slacker do
     return if fetch(:skip_get_release_description)
 
     pipelines_url = URI.parse(
-      "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/pipelines?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }&status=success&ref=#{ ENV.fetch('CI_COMMIT_SHA') }"
+      "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/pipelines?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }&status=success&ref=#{ ENV.fetch('CI_COMMIT_REF_NAME') }"
     )
 
     headers = {
