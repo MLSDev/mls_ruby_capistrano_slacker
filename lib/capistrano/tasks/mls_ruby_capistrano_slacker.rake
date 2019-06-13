@@ -184,19 +184,21 @@ namespace :mls_ruby_capistrano_slacker do
       Slack::Notifier.new(
         fetch(:mls_ruby_capistrano_slacker_webhook_url),
         username: 'CapistranoSlacker',
-        icon_emoji: ':ghost:').post text: '', attachments: [
+        icon_emoji: ':ghost:').post \
+        text: get_release_description,
+        mrkdwn: true
+        attachments: [
         {
           color:       'good',
           fallback:    'Deploy has been finished',
-          pretext:      get_release_description,
-          text:        "_Deploy has been finished_\n#{ get_release_description }",
+          text:        "_Deploy has been finished_",
           author_name: ENV.fetch('GITLAB_USER_NAME'),
           author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
           author_icon: author_icon,
           fields:      fetch(:slack_attachment_fields),
           footer:      fetch(:github_url_to_the_project),
           footer_ico:  fetch(:github_mls_logo),
-          ts:          Time.now.to_i
+          ts:          Time.now.to_i,
         }
       ]
     end
