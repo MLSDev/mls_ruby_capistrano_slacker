@@ -138,7 +138,7 @@ namespace :load do
 
       slack_attachment_fields__pipeline = {
         title: 'Pipeline',
-        value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| #{ ENV.fetch('CI_PIPELINE_ID') } via #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
+        value: "<#{ ENV.fetch('CI_PIPELINE_URL') }| ##{ ENV.fetch('CI_PIPELINE_ID') } via #{ ENV.fetch('CI_PIPELINE_SOURCE') } >",
         short: true
       }
 
