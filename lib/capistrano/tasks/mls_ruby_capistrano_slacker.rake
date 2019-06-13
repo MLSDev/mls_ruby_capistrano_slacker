@@ -186,7 +186,7 @@ namespace :mls_ruby_capistrano_slacker do
         username: 'CapistranoSlacker',
         icon_emoji: ':ghost:').post \
         text: get_release_description,
-        mrkdwn: true
+        mrkdwn: true,
         attachments: [
         {
           color:       'good',
