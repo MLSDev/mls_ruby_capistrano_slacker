@@ -1,5 +1,5 @@
 # mls_ruby_capistrano_slacker
-Tool that allows quickly prepare tag message that is based on commit messages.
+Capistrano and GitLab to Slack integration.
 
 ## Installation
 Add this line to your application's Gemfile:
