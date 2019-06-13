@@ -72,7 +72,7 @@ namespace :mls_ruby_capistrano_slacker do
 
     parsed_response = JSON.parse(response.body)
 
-    last_sha = parsed_response.first.fetch('name', nil) rescue nil
+    last_sha = parsed_response.first.fetch('sha', nil) rescue nil
     if last_sha
       puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] :: [ℹ️] We found that last tag is #{ last_sha }"
     else
@@ -108,7 +108,7 @@ namespace :mls_ruby_capistrano_slacker do
 
     # commits key - should be array of hashes
     messages =  parsed_response.fetch('commits', []).map do |commit|
-      "[#{ commit['short_id'] }](#{ ENV['CI_PROJECT_URL'] }/commit/#{ commit['id'] }) #{ commit['title'] } by #{ commit['author_name'] }\n"
+      "[#{ commit['short_id'] }](#{ ENV['CI_PROJECT_URL'] }/commit/#{ commit['id'] }) #{ commit['title'] } _by #{ commit['author_name'] }_\n"
     end
 
     messages.join
