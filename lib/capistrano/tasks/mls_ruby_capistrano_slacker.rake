@@ -57,14 +57,14 @@ namespace :mls_ruby_capistrano_slacker do
   @github_mls_logo           = 'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
 
   def author_icon
-    info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
+    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get GitLab user avatar'
     begin
       gitlab_response = Net::HTTP.get_response(URI.parse("#{ ENV.fetch('CI_API_V4_URL') }/users?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }"))
       icon = JSON.parse(gitlab_response.body).first['avatar_url']
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
+      puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] got link'
       icon
     rescue => e
-      info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
+      puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
       nil
     end
   end
@@ -73,16 +73,16 @@ namespace :mls_ruby_capistrano_slacker do
     #
     # NOTE: getting random lorem picsum image
     #
-    info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get https://picsum.photos random url'
+    puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] get https://picsum.photos random url'
     begin
       lorem_picsum_domain   = "https://picsum.photos"
       lorem_picsum_response = Net::HTTP.get_response(URI.parse( "#{ lorem_picsum_domain }/200" ))
       lorem_picsum_path     = lorem_picsum_response['location']
       url                   = "#{ lorem_picsum_domain }/#{ lorem_picsum_path }"
-      info 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] lorem pixum random url'
+      puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [✅️] lorem pixum random url'
       url
     rescue => e
-      info "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
+      puts "ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [🚨] #{ e.message }"
       nil
     end
 
