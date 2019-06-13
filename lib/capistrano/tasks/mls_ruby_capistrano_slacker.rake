@@ -149,7 +149,7 @@ namespace :load do
       }
 
       slack_attachment_fields__last_commit = {
-        title: 'Commit',
+        title: 'Last Commit',
         value: "<#{ ENV.fetch('CI_PROJECT_URL') }/commits/#{ ENV.fetch('CI_COMMIT_SHA') }|#{ ENV.fetch('CI_COMMIT_TITLE') }>",
         short: true
       }
