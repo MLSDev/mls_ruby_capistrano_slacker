@@ -30,6 +30,13 @@ Add variable to your stage
 set :mls_ruby_capistrano_slacker_webhook_url, ENV.fetch('CAPISTANO_SLACKER_WEBHOOK_URL')
 ```
 
+And don't forget to set `mls_ruby_gitlab_private_token`. You can generate it using this [guide](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#creating-a-personal-access-token).
+We prefere to set env variables via [UI](https://docs.gitlab.com/ee/ci/variables/#via-the-ui).
+
+```ruby
+set :mls_ruby_gitlab_private_token, ENV.fetch('GITLAB__PRIVATE_TOKEN')
+```
+
 Also, if you want to publish release description to your Slack - just set following variable in your deploy configs
 
 ```ruby
