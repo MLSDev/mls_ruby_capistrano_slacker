@@ -30,6 +30,10 @@ Add variable to your stage
 
 ```ruby
 set :mls_ruby_capistrano_slacker_webhook_url, ENV.fetch('CAPISTANO_SLACKER_WEBHOOK_URL')
+
+set :mls_ruby_capistrano_slacker_display_display_random_picture, true # Default value false
+
+set :mls_ruby_capistrano_slacker_notify_about_beginning, true # Default value false
 ```
 
 ### mls_ruby_gitlab_private_token

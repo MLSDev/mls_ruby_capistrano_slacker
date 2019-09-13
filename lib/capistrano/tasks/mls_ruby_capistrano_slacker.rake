@@ -124,24 +124,23 @@ namespace :mls_ruby_capistrano_slacker do
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
     on roles(:all) do |host|
+      options = {
+        color:       'warning',
+        fallback:    'New deploy has began',
+        text:        '_New deploy has began_',
+        author_name: ENV.fetch('GITLAB_USER_NAME'),
+        author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
+        author_icon: author_icon,
+        fields:      fetch(:mls_ruby_slack_attachment_fields),
+        footer:      fetch(:mls_ruby_github_url_to_the_project),
+        footer_ico:  fetch(:mls_ruby_github_mls_logo),
+        ts:          Time.now.to_i
+      }
+      options.merge(image_url: image_url) if fetch(:mls_ruby_capistrano_slacker_display_display_random_picture)
       Slack::Notifier.new(
         fetch(:mls_ruby_capistrano_slacker_webhook_url),
         username: 'CapistranoSlacker',
-        icon_emoji: ':ghost:').post text: '', attachments: [
-        {
-          color:       'warning',
-          fallback:    'New deploy has began',
-          text:        '_New deploy has began_',
-          author_name: ENV.fetch('GITLAB_USER_NAME'),
-          author_link: "https://#{ URI.parse( ENV.fetch('CI_API_V4_URL') ).host }/users/#{ ENV.fetch('GITLAB_USER_LOGIN') }",
-          author_icon: author_icon,
-          image_url:   image_url,
-          fields:      fetch(:mls_ruby_slack_attachment_fields),
-          footer:      fetch(:mls_ruby_github_url_to_the_project),
-          footer_ico:  fetch(:mls_ruby_github_mls_logo),
-          ts:          Time.now.to_i
-        }
-      ]
+        icon_emoji: ':ghost:').post text: '', attachments: [options]
     end
   end
 
@@ -200,7 +199,9 @@ namespace :mls_ruby_capistrano_slacker do
     end
   end
 
-  before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
+  if fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
+    before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
+  end
   after  'deploy:failed',   'mls_ruby_capistrano_slacker:notify_failed'
   after  'deploy:finished', 'mls_ruby_capistrano_slacker:notify_finished'
 end
@@ -211,6 +212,8 @@ namespace :load do
     set :mls_ruby_github_url_to_the_project,                   '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>'
     set :mls_ruby_github_mls_logo,                             'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
     set :mls_ruby_capistrano_slacker_post_release_description, false
+    set :mls_ruby_capistrano_slacker_display_display_random_picture, false
+    set :mls_ruby_capistrano_slacker_notify_about_beginning, false
     set :mls_ruby_gitlab_private_token,                        ENV['GITLAB__PRIVATE_TOKEN']
     set :mls_ruby_slack_attachment_fields, -> {
       slack_attachment_fields__job = {
