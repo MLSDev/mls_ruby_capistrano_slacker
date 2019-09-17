@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "mls_ruby_capistrano_slacker"
-  spec.version     = '0.1.0'
+  spec.version     = '0.2.0'
   spec.authors     = ["Dmytro Stepaniuk"]
   spec.email       = ["stepaniuk@mlsdev.com"]
   spec.homepage    = "https://mlsdev.com"
