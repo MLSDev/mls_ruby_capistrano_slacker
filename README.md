@@ -53,6 +53,14 @@ Also, if you want to publish release description to your Slack - just set follow
 set :mls_ruby_capistrano_slacker_post_release_description, true
 ```
 
+### Ability to skip this
+
+If You really need to have this gem inside your project, and dont want to see messages from that, You can add following key to `deploy.rb` or deploy configs:
+
+```ruby
+set :mls_ruby_capistrano_slacker_skip, true
+```
+
 ## Contributing
 
 1. Fork it
