@@ -125,6 +125,8 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_about_beginning do
     next if fetch(:mls_ruby_capistrano_slacker_skip)
 
+    next if fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
+
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
     on roles(:all) do |host|
@@ -207,13 +209,9 @@ namespace :mls_ruby_capistrano_slacker do
     end
   end
 
-  unless fetch(:mls_ruby_capistrano_slacker_skip)
-    if fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
-      before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
-    end
-    after  'deploy:failed',   'mls_ruby_capistrano_slacker:notify_failed'
-    after  'deploy:finished', 'mls_ruby_capistrano_slacker:notify_finished'
-  end
+  before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
+  after  'deploy:failed',   'mls_ruby_capistrano_slacker:notify_failed'
+  after  'deploy:finished', 'mls_ruby_capistrano_slacker:notify_finished'
 end
 
 namespace :load do
