@@ -199,11 +199,13 @@ namespace :mls_ruby_capistrano_slacker do
     end
   end
 
-  if fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
-    before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
+  unless fetch(:mls_ruby_capistrano_slacker_skip)
+    if fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
+      before 'deploy:starting', 'mls_ruby_capistrano_slacker:notify_about_beginning'
+    end
+    after  'deploy:failed',   'mls_ruby_capistrano_slacker:notify_failed'
+    after  'deploy:finished', 'mls_ruby_capistrano_slacker:notify_finished'
   end
-  after  'deploy:failed',   'mls_ruby_capistrano_slacker:notify_failed'
-  after  'deploy:finished', 'mls_ruby_capistrano_slacker:notify_finished'
 end
 
 namespace :load do
@@ -214,6 +216,7 @@ namespace :load do
     set :mls_ruby_capistrano_slacker_post_release_description, false
     set :mls_ruby_capistrano_slacker_display_display_random_picture, false
     set :mls_ruby_capistrano_slacker_notify_about_beginning, false
+    set :mls_ruby_capistrano_slacker_skip, false
     set :mls_ruby_gitlab_private_token,                        ENV['GITLAB__PRIVATE_TOKEN']
     set :mls_ruby_slack_attachment_fields, -> {
       slack_attachment_fields__job = {
