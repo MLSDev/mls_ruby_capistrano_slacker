@@ -123,7 +123,7 @@ namespace :mls_ruby_capistrano_slacker do
   # BEGINNING
   #
   task :notify_about_beginning do
-    return if fetch(:mls_ruby_capistrano_slacker_skip)
+    next if fetch(:mls_ruby_capistrano_slacker_skip)
 
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
@@ -152,7 +152,7 @@ namespace :mls_ruby_capistrano_slacker do
   # FAILED
   #
   task :notify_failed do
-    return if fetch(:mls_ruby_capistrano_slacker_skip)
+    next if fetch(:mls_ruby_capistrano_slacker_skip)
 
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
@@ -181,7 +181,7 @@ namespace :mls_ruby_capistrano_slacker do
   # FINISHED
   #
   task :notify_finished do
-    return if fetch(:mls_ruby_capistrano_slacker_skip)
+    next if fetch(:mls_ruby_capistrano_slacker_skip)
 
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
