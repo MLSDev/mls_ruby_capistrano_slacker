@@ -40,6 +40,8 @@ namespace :mls_ruby_capistrano_slacker do
   def get_release_description
     return unless fetch(:mls_ruby_capistrano_slacker_post_release_description)
 
+    return if fetch(:mls_ruby_capistrano_slacker_skip)
+
     pipelines_url = URI.parse(
       "#{ ENV['CI_API_V4_URL'] }/projects/#{ ENV['CI_PROJECT_ID'] }/pipelines?username=#{ ENV.fetch('GITLAB_USER_LOGIN') }&status=success&ref=#{ ENV.fetch('CI_COMMIT_REF_NAME') }"
     )
@@ -121,6 +123,8 @@ namespace :mls_ruby_capistrano_slacker do
   # BEGINNING
   #
   task :notify_about_beginning do
+    return if fetch(:mls_ruby_capistrano_slacker_skip)
+
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
     on roles(:all) do |host|
@@ -148,6 +152,8 @@ namespace :mls_ruby_capistrano_slacker do
   # FAILED
   #
   task :notify_failed do
+    return if fetch(:mls_ruby_capistrano_slacker_skip)
+
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_failed'
 
     on roles(:all) do |host|
@@ -175,6 +181,8 @@ namespace :mls_ruby_capistrano_slacker do
   # FINISHED
   #
   task :notify_finished do
+    return if fetch(:mls_ruby_capistrano_slacker_skip)
+
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_finished'
 
     on roles(:all) do |host|
