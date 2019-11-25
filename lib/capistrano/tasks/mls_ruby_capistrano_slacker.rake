@@ -125,7 +125,7 @@ namespace :mls_ruby_capistrano_slacker do
   task :notify_about_beginning do
     next if fetch(:mls_ruby_capistrano_slacker_skip)
 
-    next if fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
+    next unless fetch(:mls_ruby_capistrano_slacker_notify_about_beginning)
 
     puts 'ⓂⓁⓈ-ⓉⒺⒸ [🛠] [mls_ruby_capistrano_slacker] :: [ℹ️] notify_about_beginning'
 
