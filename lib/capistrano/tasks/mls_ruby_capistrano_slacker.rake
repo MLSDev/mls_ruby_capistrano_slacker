@@ -210,7 +210,7 @@ end
 
 namespace :load do
   task :defaults do
-    set :mls_ruby_capistrano_slacker_webhook_url,              -> { fail ':mls_ruby_capistrano_slacker_webhook_url is not set' }
+    set :mls_ruby_capistrano_slacker_webhook_url,              -> { 'example.com' }
     set :mls_ruby_github_url_to_the_project,                   '<https://github.com/MLSDev/mls_ruby_capistrano_slacker|mls_ruby_capistrano_slacker>'
     set :mls_ruby_github_mls_logo,                             'https://avatars2.githubusercontent.com/u/1436035?s=50&v=4'
     set :mls_ruby_capistrano_slacker_post_release_description, false
