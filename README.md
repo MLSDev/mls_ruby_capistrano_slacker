@@ -18,7 +18,7 @@ Or install it yourself as:
 $ gem install mls_ruby_capistrano_slacker
 ```
 
-Update `Capistrano`
+Update `Capfile`
 
 ```ruby
 require 'capistrano/mls_ruby_capistrano_slacker'
